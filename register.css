@@ -1,0 +1,75 @@
+.Home-button {
+    background-color: #4CAF50; /* Change the button color for a more professional look */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px; /* Adjust top position as needed */
+    right: 20px; /* Adjust right position as needed */
+}
+.Login-button {
+    background-color:  #4CAF50; /* Use a standard color for consistency */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+    position: absolute;
+    top: 50px; /* Adjust top position as needed */
+    right: 20px; /* Adjust right position as needed */
+}
+body {
+    font-family: 'Segoe UI', Arial, sans-serif; /* Use a more professional font */
+    background-color: #f6f6f6; /* Light background for a clean look */
+    color: #333; /* Dark color for text for readability */
+    margin: 0;
+    padding: 20px;
+}
+.container {
+    background-color: #ffffff;
+    padding: 40px 60px; /* Increase padding for a more spacious layout */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    max-width: 500px; /* Optimal width for forms */
+    margin: 5% auto; /* Center form with margin */
+}
+h2 {
+    font-size: 24px; /* Appropriate heading size */
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px; /* More space below the heading */
+}
+input[type="text"], input[type="password"], input[type="email"], input[type="tel"], select {
+    width: 100%; /* Full width */
+    padding: 12px 20px; /* Increase padding for better readability */
+    margin: 8px 0 20px; /* Adjust margins */
+    display: inline-block;
+    border: 1px solid #ccc; /* Standard border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Prevent padding from increasing width */
+}
+button[type="button"] {
+    width: 100%; /* Full width */
+    background-color: #4CAF50; /* Green color */
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+button[type="button"]:hover {
+    background-color: #45a049; /* Darker hover effect */
+}
