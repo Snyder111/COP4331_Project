@@ -2,12 +2,12 @@
 
 <html>
     <head>
-        <style>table, th, td {border:1px solid black;} th { padding: 20px;} table.center {margin-left: auto; margin-right: auto;} table {text-align: center;}</style>
+        <style id="rowStyle">table, th, td {border:1px solid black;} th { padding: 20px;} table.center {margin-left: auto; margin-right: auto;} table {text-align: center;}</style>
     </head>
     <body>
-        <h1 id="timer">Placeholder</h1>
+        <button id="login" onclick="window.location.href = 'login.html'">Want to Login?</button>
         <h1 id="track"></h1>
-        <table>
+        <table id="table">
             <tr id="Winner">
                 <td><h4 style="color: #000;" id="posW"></h4></td>
                 <td><h4 id="tBrandW"></h4></td>
@@ -23,86 +23,6 @@
                 <th><h3>Color</h3></th>
                 <th><h3>Body Type</h3></th>
                 <th><h3>Chance</h3></th>
-            </tr>
-            <tr id="Car0">
-                <td><p style="color: #000">Car 1</p></td>
-                <td><p id="tBrand0"></p></td>
-                <td><p id="tType0"></p></td>
-                <td><p id="cColor0"></p></td>
-                <td><p id="cBody0"></p></td>
-                <td><p id="chance0"></p></td>
-            </tr>
-            <tr id="Car1">
-                <td><p style="color: #000">Car 2</p></td>
-                <td><p id="tBrand1"></p></td>
-                <td><p id="tType1"></p></td>
-                <td><p id="cColor1"></p></td>
-                <td><p id="cBody1"></p></td>
-                <td><p id="chance1"></p></td>
-            </tr>
-            <tr id="Car2">
-                <td><p style="color: #000">Car 3</p></td>
-                <td><p id="tBrand2"></p></td>
-                <td><p id="tType2"></p></td>
-                <td><p id="cColor2"></p></td>
-                <td><p id="cBody2"></p></td>
-                <td><p id="chance2"></p></td>
-            </tr>
-            <tr id="Car3">
-                <td><p style="color: #000">Car 4</p></td>
-                <td><p id="tBrand3"></p></td>
-                <td><p id="tType3"></p></td>
-                <td><p id="cColor3"></p></td>
-                <td><p id="cBody3"></p></td>
-                <td><p id="chance3"></p></td>
-            </tr>
-            <tr id="Car4">
-                <td><p style="color: #000">Car 5</p></td>
-                <td><p id="tBrand4"></p></td>
-                <td><p id="tType4"></p></td>
-                <td><p id="cColor4"></p></td>
-                <td><p id="cBody4"></p></td>
-                <td><p id="chance4"></p></td>
-            </tr>
-            <tr id="Car5">
-                <td><p style="color: #000">Car 6</p></td>
-                <td><p id="tBrand5"></p></td>
-                <td><p id="tType5"></p></td>
-                <td><p id="cColor5"></p></td>
-                <td><p id="cBody5"></p></td>
-                <td><p id="chance5"></p></td>
-            </tr>
-            <tr id="Car6">
-                <td><p style="color: #000">Car 7</p></td>
-                <td><p id="tBrand6"></p></td>
-                <td><p id="tType6"></p></td>
-                <td><p id="cColor6"></p></td>
-                <td><p id="cBody6"></p></td>
-                <td><p id="chance6"></p></td>
-            </tr>
-            <tr id="Car7">
-                <td><p style="color: #000">Car 8</p></td>
-                <td><p id="tBrand7"></p></td>
-                <td><p id="tType7"></p></td>
-                <td><p id="cColor7"></p></td>
-                <td><p id="cBody7"></p></td>
-                <td><p id="chance7"></p></td>
-            </tr>
-            <tr id="Car8">
-                <td><p style="color: #000">Car 9</p></td>
-                <td><p id="tBrand8"></p></td>
-                <td><p id="tType8"></p></td>
-                <td><p id="cColor8"></p></td>
-                <td><p id="cBody8"></p></td>
-                <td><p id="chance8"></p></td>
-            </tr>
-            <tr id="Car9">
-                <td><p style="color: #000">Car 10</p></td>
-                <td><p id="tBrand9"></p></td>
-                <td><p id="tType9"></p></td>
-                <td><p id="cColor9"></p></td>
-                <td><p id="cBody9"></p></td>
-                <td><p id="chance9"></p></td>
             </tr>
         </table>
 
@@ -151,15 +71,23 @@
                 var winner = new Car();
                 winner.chance = 0;
 
+                var table = document.getElementById("table");
+
                 for(var i = 0; i < 10; i++) {
                     const car = new Car();
+                    var newRow = table.insertRow();
+                    newRow.style.color = car.hexColor;
                     car.position = i + 1;
-                    document.getElementById("tBrand" + i).innerHTML = car.tire;
-                    document.getElementById("tType" + i).innerHTML = car.tireType;
-                    document.getElementById("cColor" + i).innerHTML = car.color;
-                    document.getElementById("cBody" + i).innerHTML = car.body;
-                    document.getElementById("chance" + i).innerHTML = car.chance;
-                    document.getElementById("Car" + i).style.color = car.hexColor;
+
+                    var firstCol = newRow.insertCell();
+                    firstCol.innerHTML = "Car" + (i + 1);
+                    firstCol.style = "padding: 20px;";
+                    firstCol.style.color = "#000";
+                    newRow.insertCell().innerHTML = car.tire;
+                    newRow.insertCell().innerHTML = car.tireType;
+                    newRow.insertCell().innerHTML = car.color;
+                    newRow.insertCell().innerHTML = car.body;
+                    newRow.insertCell().innerHTML = car.chance;
 
                     if(winner.chance < car.chance) {
                         winner = car;
@@ -175,24 +103,13 @@
                 document.getElementById("posW").innerHTML = "W Car " + winner.position;
             }
         Race();
-
-        const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
-
-        async function timer() {
-            const date = new Date();
-            if(date.getMinutes() % 15 == 0) {
-                Race();
-                console.log(date);
+        
+        document.getElementById("race").addEventListener("click", () => {
+            for(var i = 0; i < 10; i++) {
+                table.deleteRow(-1);
             }
-            document.getElementById("timer").innerHTML = (15 - date.getMinutes()) + ":" (60 - date.getSeconds());
-            await wait(1000);
-
-            timer();
-        }
-
-        timer();
-
-        document.getElementById("race").addEventListener("click", Race);
+            Race();
+        });
 
         </script>
     </body>
