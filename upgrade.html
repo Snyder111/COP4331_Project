@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upgrade to Premium Membership</title>
+  <link rel="stylesheet" href="upgrade.css">
+</head>
+
+<body>
+  <div class="container">
+    <h2>Upgrade to Premium Membership</h2>
+    
+    <!-- Upgrade Information -->
+    <div class="upgrade-info">
+      <p>Upgrade to premium membership to unlock exclusive features:</p>
+      <ul>
+        <li>Access to all race results</li>
+        <li>Additional chips or bonuses</li>
+        <!-- Add more benefits here -->
+      </ul>
+      <p>Pricing: $X/month or $Y/year</p>
+    </div>
+    
+    <!-- Credit Card Form -->
+    <form id="creditCardForm">
+        <h4>Card Information</h4>
+        <label for="cardholderName">Cardholder Name:</label>
+        <input type="text" id="cardholderName" name="cardholderName" placeholder="Enter cardholder name" required>
+        
+        <label for="cardNumber">Credit Card Number:</label>
+        <input type="text" id="cardNumber" name="cardNumber" placeholder="Enter your credit card number" required>
+        
+        <label for="expirationDate">Expiration Date:</label>
+        <input type="text" id="expirationDate" name="expirationDate" placeholder="MM/YY" required>
+        
+        <label for="cvv">CVV:</label>
+        <input type="text" id="cvv" name="cvv" placeholder="CVV" required>
+        
+        <!-- Billing Address Fields -->
+        <h4>Billing Address</h4>
+        <label for="Street Address">Street Address</label>
+        <input type="text" id="StreetAddress" name="streetAddress" placeholder="Enter your street address" required>
+        
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" placeholder="Enter your city" required>
+        
+        <label for="state">State/Province:</label>
+        <input type="text" id="state" name="state" placeholder="Enter your state/province" required>
+        
+        <label for="zip">Postal/ZIP Code:</label>
+        <input type="text" id="zip" name="zip" placeholder="Enter your postal/ZIP code" required>
+        
+        <label for="country">Country:</label>
+        <input type="text" id="country" name="country" placeholder="Enter your country" required>
+        
+        
+        <!-- Terms and Conditions Checkbox -->
+        <div class="terms-checkbox">
+            <input type="checkbox" id="termsCheckbox" required>
+            <label for="termsCheckbox">I have read and agree to the <a href="terms.html" target="_blank">terms and conditions</a>.</label>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="button" onclick="upgradeToPremium()" class="upgrade-button">Upgrade Now</button>
+
+        <script>
+          function upgradeToPremium() {
+            // Perform any necessary processing and validation here
+            
+            // Redirect to the upgrade success page
+            window.location.href = "upgrade_success.html";
+          }
+
+      </script>
+      
+    </form>
+    
+    <!-- Support Information -->
+    <div class="support-info">
+      <p>Need help? Contact us at <a href="mailto:support@example.com">support@example.com</a>.</p>
+    </div>
+  </div>
+</body>
+
+</html>
