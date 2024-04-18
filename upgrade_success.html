@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Reset default margin and padding */
+        * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        }
+
+        /* Body styles */
+        body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        }
+
+        /* Container styles */
+        .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        }
+
+        /* Heading styles */
+        h2 {
+        margin-bottom: 20px;
+        }
+
+        /* Button styles */
+        .back-button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+        background-color: #0056b3;
+        }
+    </style>
+    <title>Upgrade Successful</title>
+
+    </head>
+    <body>
+    <div class="container">
+        <h2>Upgrade Successful!</h2>
+        <p>Your account has been upgraded to premium membership.</p>
+        <button onclick="goToDashboard()" class="back-button">Go Back to Dashboard</button>
+    </div>
+
+    <script>
+        function goToDashboard() {
+        window.location.href = "dashboard.html";
+        }
+    </script>
+</body>
+</html>
