@@ -5,6 +5,19 @@ const { request } = require('http');
 const url = require("url");
 const app = express();
 
+app.get('/landing_page.html', (request, response) => {
+
+    readFile('landing_page.html', 'utf8', (err, html) => {
+
+        if(err) {
+            response.status(500).send('Sorry, out of order :(');
+        }
+
+        response.send(html);
+    })
+
+});
+
 app.get('/home.html', (request, response) => {
 
     readFile('home.html', 'utf8', (err, html) => {
@@ -44,10 +57,24 @@ app.get('/register.html', (request, response) => {
 
 });
 
-app.get('/', (request, response) => {
+app.get('/account_mgmt.html', (request, response) => {
 
-    response.redirect('/home.html');
+    readFile('account_mgmt.html', 'utf8', (err, html) => {
+
+        if(err) {
+            response.status(500).send('Sorry, out of order :(');
+        }
+
+        response.send(html);
+    })
 
 });
+
+app.get('/', (request, response) => {
+
+    response.redirect('/landing_page.html');
+
+});
+
 
 app.listen(process.env.PORT || 3000, () => console.log('App available on http://localhost:3000/'));
