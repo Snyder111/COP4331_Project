@@ -27,6 +27,7 @@
         </table>
 
         <button id="race"><p>Press me to race!</p></button>
+	<button id="generateCSV">Generate Race History(CSV)</button>
 
         <script>
             function Race() {
@@ -71,6 +72,8 @@
                 var winner = new Car();
                 winner.chance = 0;
 
+		var raceResults = []; // Store race results
+
                 var table = document.getElementById("table");
 
                 for(var i = 0; i < 10; i++) {
@@ -92,6 +95,9 @@
                     if(winner.chance < car.chance) {
                         winner = car;
                     }
+			// Push car data to the race resultsa array
+			raceResults.push([car.tire, car.tireType, car.color, car.body, car.chance]);
+			
                 }
 
                 document.getElementById("tBrandW").innerHTML = winner.tire;
@@ -101,16 +107,40 @@
                 document.getElementById("chanceW").innerHTML = winner.chance;
                 document.getElementById("Winner").style.color = winner.hexColor;
                 document.getElementById("posW").innerHTML = "W Car " + winner.position;
+
+		return raceResults; // return the array storing the results of the race
             }
-        Race();
+		
+       // Race();	
+	function generateCSV() {
+		var raceResults = Race(); // Get race results
+		var csvContent = "data:text/csv;charset=utf-8,";
+
+		raceResults.forEach(function(rowArray)  {
+			var row = rowArray.join(",");
+			csvContent += row + "\r\n";
+		});
+
+		return csvContent;
+	}
         
-        document.getElementById("race").addEventListener("click", () => {
+          document.getElementById("race").addEventListener("click", () => {
+            var table = document.getElementById("table");
             for(var i = 0; i < 10; i++) {
                 table.deleteRow(-1);
             }
             Race();
         });
 
+	document.getElementById("generateCSV").addEventListener("click", () => {
+            var csvData = generateCSV();
+            var encodedUri = encodeURI(csvData);
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "raceHistory.csv");
+            document.body.appendChild(link);
+            link.click();
+        });
         </script>
     </body>
 </html>
