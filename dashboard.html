@@ -1,0 +1,51 @@
+<!-- User's main page. Links to all other pages -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puzzle Betting System - Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css"> <!-- Link to CSS file -->
+</head.
+<body>
+    <header>
+        <h1>Welcome to Puzzle Betting System</h1>
+        <!-- Webpage navigation links-->
+        <nav>
+            <ul>
+                <li><a href="homepage.html">Home</a></li>
+                <li><a href="account_mgmt.html">Account</a></li>
+                <li><a href="home.html">Race Results</a></li>
+                <!-- Logout link here -->
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="user-info">
+            <h2>Dashboard</h2>
+            <!-- Display user's username and chip balance -->
+            <p>Welcome, <span id="username">JohnDoe</span>! Your current chip balance is <span id="chip-balance">500</span>.</p>
+            <!-- Link to upgrade to premium membership -->
+            <p>Upgrade to premium <a href="upgrade.html">here</a> for access to all race results.</p>
+        </section>
+
+        <section class="betting-options">
+            <h2>Upcoming Races</h2>
+            <!-- Display upcoming races with options to place bets -->
+            <div class="race">
+                <h3>Race 1</h3>
+                <p>Horses: Horse A, Horse B, Horse C</p>
+                <p>Bet on your favorite horse!</p>
+                <button>Bet Now</button>
+            </div>
+            <!-- More upcoming races can be listed here -->
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Puzzle Betting System. All rights reserved.</p>
+    </footer>
+</body>
+</html>
