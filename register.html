@@ -3,10 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  
+  <script src="register.js"></script>
+
   <title>Register New User</title>
   <link rel="stylesheet" href="register.css">
-  <button class="Home-button" onclick="window.location.href='home.html'">Home</button>
+  <button class="Home-button" onclick="window.location.href='index.html'">Home</button>
   <button class="Login-button" onclick="window.location.href='login.html'">Already have an account?</button>
 
 </head>
@@ -17,31 +18,17 @@
     <h2>Register New User</h2>
     <form id="registrationForm">
       <div>
-        <label for="user_id">User ID:</label>
-        <input type="text" id="user_id" name="user_id" required>
-      </div>
-      <div>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-      </div>
-      <div>
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-      </div>
-      <div>
-        <label for="lastname">Last Name:</label>
-        <input type="text" id="lastname" name="lastname" required>
-      </div>
-      <div>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-      </div>
-      <div>
-        <label for="phone">Phone Number:</label>
-        <input type="tel" id="phone" name="phone" required>
+        <label for="Username">Username:</label>
+        <input type="text" id="Username" name="Username" required>
       </div>
       
-      <button type="button" id="createAccount" class=" btn btn-lg btn-primary w-100" onclick="doSignUp();">Submit</button>
+      <div>
+        <label for="Password">Password:</label>
+        <input type="Password" id="Password" name="Password" required>
+      </div>
+
+
+      <button type="submit" id="createAccount" class="btn btn-lg btn-primary w-100">Submit</button>
     </form>
     <div id="message"></div>
   </div>

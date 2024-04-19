@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>Login Page</title>
+  <!-- Make sure to include jQuery first if it's needed by login.js -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Include login.js to ensure doLogin function is defined -->
+  <script src="login.js"></script>
   <link rel="stylesheet" href="login.css">
-  
-  </head>
-  <body>
+</head>
+<body>
   <div class="container">
-      <h2>Login <button class="Home-button" onclick="window.location.href='home.html'">Home</button>
-        <button class="registerbutton" onclick="window.location.href='register.html'">Register</button></h2>
-
-
-          <form id="loginForm">
+      <h2>Login</h2>
+      <button class="Home-button" onclick="window.location.href='index.html'">Home</button>
+      <button class="registerbutton" onclick="window.location.href='register.html'">Register</button>
+      <form id="loginForm">
           <div>
               <label for="user_id">User ID:</label>
               <input type="text" id="user_id" name="user_id" required>
@@ -23,15 +24,10 @@
               <label for="password">Password:</label>
               <input type="password" id="password" name="password" required>
           </div>
-          <button type="button" id="loginButton" class=" btn btn-lg btn-primary w-100" onclick="doLogin();"> Submit <i class ="fa fa-sign-in"></i> </button>
+          <button type="button" id="loginButton" class="btn btn-lg btn-primary w-100">Log In</button>
       </form>
       <div id="message"></div>
-
-
   </div>
-
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-      
-
-  </body>
-  </html>
+  
+</body>
+</html>
