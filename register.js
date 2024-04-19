@@ -8,24 +8,17 @@ const connection = mysql.createConnection({
 });
 
 // Log when connection is established
-connection.connect((err) => {
-    if (err) {
-        console.error('Error connecting to database:', err);
-        return;
-    }
-    console.log('Connected to database');
-});
+connection.connect();
 
 // Log if connection is lost
-connection.on('error', (err) => {
-    console.error('Database connection error:', err);
-});
+connection.query('*COMMAND GOES HERE*', (err, result, fields) => {
+    if (err) throw err
+    //Do things with result and fields (mainly result)
+  });
+  
+  connection.end();
 
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById('registrationForm').addEventListener('submit', function(event){
-        doSignUp(event);
-    });
-});
+
 
 function doSignUp(event) {
     event.preventDefault(); // Prevent the default form submission behavior
@@ -39,28 +32,8 @@ function doSignUp(event) {
     }
     document.getElementById('message').innerHTML = '<p>Registering... Please wait.</p>';
     // Perform INSERT query to insert user registration data into MySQL database
-    const sql = "INSERT INTO users (UserID, Username, Password, PremiumToken, Chips) VALUES (?, ?, ?, NULL, 1000)";
+    const sql = "INSERT INTO users (Username, Password, PremiumToken, Chips) VALUES (?, ?, NULL, 1000)";
     
     // Retrieve the last UserID and increment it
-    connection.query("SELECT MAX(UserID) AS maxUserID FROM users", (err, rows) => {
-        if (err) {
-            console.error('Failed to retrieve max UserID', err);
-            document.getElementById('message').innerHTML = '<p>Registration failed. Please try again.</p>';
-            return;
-        }
-        
-        const maxUserID = rows[0].maxUserID || 0; // If no users exist, set maxUserID to 0
-        const newUserID = maxUserID + 1;
-        
-        // Execute the INSERT query with the newUserID
-        connection.query(sql, [newUserID, Username, Password], (err, result) => {
-            if (err) {
-                console.error('Registration Failed', err);
-                document.getElementById('message').innerHTML = '<p>Registration failed. Please try again.</p>';
-            } else {
-                console.log('Registration Successful', result);
-                document.getElementById('message').innerHTML = '<p>Registration successful. Please <a href="login.html">login</a>.</p>';
-            }
-        });
-    });
+   
 }
