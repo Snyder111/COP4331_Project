@@ -6,18 +6,18 @@ const url = require("url");
 const { time } = require('console');
 const app = express();
 
+const mysql = require('mysql');
+
+const connection = mysql.createConnection({
+host: 'sql5.freesqldatabase.com',
+user: 'sql5700190',
+password: 'KLk8Zr8C7N',
+database: 'sql5700190'
+});
+
+connection.connect();
+
 function Race() {
-
-    const mysql = require('mysql');
-
-    const connection = mysql.createConnection({
-    host: 'sql5.freesqldatabase.com',
-    user: 'sql5700190',
-    password: 'KLk8Zr8C7N',
-    database: 'sql5700190'
-    });
-
-    connection.connect();
 
     const tracks = ["Sand", "Dirt", "Gravel", "Tarmac", "Brick", "Ice"];
     const trackNum = Math.floor(Math.random()*tracks.length);
@@ -75,37 +75,11 @@ function Race() {
         if (err) throw err
     });
 
-
-    connection.end();
 }
 
 //Race();
 
-const mysql = require('mysql');
-
-const connection = mysql.createConnection({
-  host: 'sql5.freesqldatabase.com',
-  user: 'sql5700190',
-  password: 'KLk8Zr8C7N',
-  database: 'sql5700190'
-})
-
-connection.connect();
-
-connection.query('SELECT * FROM Cars', (err, result, fields) => {
-    if (err) throw err
-    console.log(result);
-  });
-
-connection.query('SELECT * FROM Races', (err, result, fields) => {
-  if (err) throw err
-  console.log(result);
-});
-
-
-
-connection.end();
-
+// HOME
 app.get('/home.html', (request, response) => {
 
     readFile('home.html', 'utf8', (err, html) => {
@@ -119,6 +93,7 @@ app.get('/home.html', (request, response) => {
 
 });
 
+// LOGIN
 app.get('/login.html', (request, response) => {
 
     readFile('login.html', 'utf8', (err, html) => {
@@ -132,6 +107,7 @@ app.get('/login.html', (request, response) => {
 
 });
 
+// REGISTER
 app.get('/register.html', (request, response) => {
 
     readFile('register.html', 'utf8', (err, html) => {
@@ -145,10 +121,98 @@ app.get('/register.html', (request, response) => {
 
 });
 
+// ACCOUNT MANAGEMENT
+app.get('/account_mgmt.html', (request, response) => {
+
+    readFile('account_mgmt.html', 'utf8', (err, html) => {
+
+        if(err) {
+            response.status(500).send('Sorry, out of order :(');
+        }
+
+        response.send(html);
+    })
+
+});
+
+// DASHBOARD
+app.get('/dashboard.html', (request, response) => {
+
+    readFile('dashboard.html', 'utf8', (err, html) => {
+
+        if(err) {
+            response.status(500).send('Sorry, out of order :(');
+        }
+
+        response.send(html);
+    })
+
+});
+
+// LANDING PAGE
+app.get('/landing_page.html', (request, response) => {
+
+    readFile('landing_page.html', 'utf8', (err, html) => {
+
+        if(err) {
+            response.status(500).send('Sorry, out of order :(');
+        }
+
+        response.send(html);
+    })
+
+});
+
+// UPGRADE
+app.get('/upgrade.html', (request, response) => {
+
+    readFile('upgrade.html', 'utf8', (err, html) => {
+
+        if(err) {
+            response.status(500).send('Sorry, out of order :(');
+        }
+
+        response.send(html);
+    })
+
+});
+
+// UPGRADE SUCCESS
+app.get('/upgrade_sucess.html', (request, response) => {
+
+    readFile('upgrade_success.html', 'utf8', (err, html) => {
+
+        if(err) {
+            response.status(500).send('Sorry, out of order :(');
+        }
+
+        response.send(html);
+    })
+
+});
+
+// missing -- betting pages
+
+// Start-up page? change to landing page when that is ready
 app.get('/', (request, response) => {
 
-    response.redirect('/home.html');
+    readFile('landing_page.html', 'utf8', (err, html) => {
 
+        if(err) {
+            response.status(500).send('Sorry, out of order :(');
+        }
+
+        response.send(html);
+    })
+
+});
+
+app.post('/getCars', (request, response) => {
+    connection.query('SELECT * FROM Cars; SELECT * FROM Races', (err, result, fields) => {
+        if (err) throw err
+        console.log(fields);
+        response.status(200).json(result);
+    });
 });
 
 app.listen(process.env.PORT || 3000, () => console.log('App available on http://localhost:3000/'));
