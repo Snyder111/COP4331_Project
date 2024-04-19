@@ -7,7 +7,19 @@ const connection = mysql.createConnection({
   database: 'sql5700190'
 });
 
-connection.connect();
+// Log when connection is established
+connection.connect((err) => {
+    if (err) {
+        console.error('Error connecting to database:', err);
+        return;
+    }
+    console.log('Connected to database');
+});
+
+// Log if connection is lost
+connection.on('error', (err) => {
+    console.error('Database connection error:', err);
+});
 
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById('registrationForm').addEventListener('submit', function(event){
@@ -27,7 +39,7 @@ function doSignUp(event) {
     }
     document.getElementById('message').innerHTML = '<p>Registering... Please wait.</p>';
     // Perform INSERT query to insert user registration data into MySQL database
-    const sql = "INSERT INTO `Users`(`UserID`, `Username`, `Password`, `PremiumToken`, `Chips`) VALUES ([?], [?], [?],[ NULL],[ 1000])";
+    const sql = "INSERT INTO users (UserID, Username, Password, PremiumToken, Chips) VALUES (?, ?, ?, NULL, 1000)";
     
     // Retrieve the last UserID and increment it
     connection.query("SELECT MAX(UserID) AS maxUserID FROM users", (err, rows) => {
