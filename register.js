@@ -27,14 +27,28 @@ function doSignUp(event) {
     }
     document.getElementById('message').innerHTML = '<p>Registering... Please wait.</p>';
     // Perform INSERT query to insert user registration data into MySQL database
-    const sql = "INSERT INTO users (username, password) VALUES (?, ?)";
-    connection.query(sql, [Username, Password], (err, result) => {
+    const sql = "INSERT INTO users (UserID, Username, Password, PremiumToken, Chips) VALUES (?, ?, ?, NULL, 1000)";
+    
+    // Retrieve the last UserID and increment it
+    connection.query("SELECT MAX(UserID) AS maxUserID FROM users", (err, rows) => {
         if (err) {
-            console.error('Registration Failed', err);
+            console.error('Failed to retrieve max UserID', err);
             document.getElementById('message').innerHTML = '<p>Registration failed. Please try again.</p>';
-        } else {
-            console.log('Registration Successful', result);
-            document.getElementById('message').innerHTML = '<p>Registration successful. Please <a href="login.html">login</a>.</p>';
+            return;
         }
+        
+        const maxUserID = rows[0].maxUserID || 0; // If no users exist, set maxUserID to 0
+        const newUserID = maxUserID + 1;
+        
+        // Execute the INSERT query with the newUserID
+        connection.query(sql, [newUserID, Username, Password], (err, result) => {
+            if (err) {
+                console.error('Registration Failed', err);
+                document.getElementById('message').innerHTML = '<p>Registration failed. Please try again.</p>';
+            } else {
+                console.log('Registration Successful', result);
+                document.getElementById('message').innerHTML = '<p>Registration successful. Please <a href="login.html">login</a>.</p>';
+            }
+        });
     });
 }
