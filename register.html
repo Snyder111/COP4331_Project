@@ -32,6 +32,26 @@
     </form>
     <div id="message"></div>
   </div>
+  <script>
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+
+        fetch('http://localhost:3000/register', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle response from server
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+</script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
 </html>
