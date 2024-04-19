@@ -8,6 +8,7 @@
     <title>Puzzle Betting System</title>
     <!-- Link to your CSS file -->
     <link rel="stylesheet" href="styles.css">
+    <style id="rowStyle">table, th, td {border:1px solid black;} th { padding: 20px;} table.center {margin-left: auto; margin-right: auto;} table {text-align: center;}</style>
 </head>
 <body>
     <center>
@@ -30,6 +31,14 @@
             <section class="next-race">
                 <h2>Results for next race in...</h2>
                 <h2 id="timer"></h2>
+                <table id="table">
+                    <tr>
+                        <th><h3>Tire Brand</h3></th>
+                        <th><h3>Tire Type</h3></th>
+                        <th><h3>Color</h3></th>
+                        <th><h3>Body Type</h3></th>
+                    </tr>
+                </table>
                 <script>
                     const timer = document.getElementById('timer');
                     const table = document.getElementById('currentRace');
@@ -49,6 +58,26 @@
                         setTimeout(() => {updateClock();}, 100);
                     }
                     
+                    fetch('./getCars', {
+                        method: 'POST'
+                    }).then(response => response.json()).then(data => {
+                        console.log(data);
+                        
+                        var table = document.getElementById("table");
+                        for(var i = data.length - 10; i < data.length; i++) {
+                            var newRow = table.insertRow();
+                            newRow.style.color = data[i].colorHex;
+                            newRow.insertCell().innerHTML = data[i].tireBrand;
+                            newRow.insertCell().innerHTML = data[i].tireType;
+                            newRow.insertCell().innerHTML = data[i].colorStr;
+                            newRow.insertCell().innerHTML = data[i].body;
+                        }
+                        
+                    }).catch(error => {
+                        console.error('Error registering user:', error);
+                        document.getElementById('message').innerText = 'An error occurred. Please try again later.';
+                    });
+
                     updateClock();
                 </script>
                 <div>
