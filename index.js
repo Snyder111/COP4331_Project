@@ -106,7 +106,6 @@ connection.query('SELECT * FROM Races', (err, result, fields) => {
 
 connection.end();
 
-/*
 app.get('/home.html', (request, response) => {
 
     readFile('home.html', 'utf8', (err, html) => {
@@ -166,4 +165,3 @@ function timer() {
 }
 
 timer();
-*/
