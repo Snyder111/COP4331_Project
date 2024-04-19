@@ -4,30 +4,98 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>Login Page</title>
-  <!-- Make sure to include jQuery first if it's needed by login.js -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <!-- Include login.js to ensure doLogin function is defined -->
-  <script src="login.js"></script>
-  <link rel="stylesheet" href="login.css">
+
+  
 </head>
 <body>
   <div class="container">
-      <h2>Login</h2>
-      <button class="Home-button" onclick="window.location.href='index.html'">Home</button>
-      <button class="registerbutton" onclick="window.location.href='register.html'">Register</button>
-      <form id="loginForm">
-          <div>
-              <label for="user_id">User ID:</label>
-              <input type="text" id="user_id" name="user_id" required>
-          </div>
-          <div>
-              <label for="password">Password:</label>
-              <input type="password" id="password" name="password" required>
-          </div>
-          <button type="button" id="loginButton" class="btn btn-lg btn-primary w-100">Log In</button>
-      </form>
-      <div id="message"></div>
-  </div>
+    <h2>Login</h2>
+   
+    <form id="loginForm" action="/login" method="POST"> <!-- Added action and method -->
+      <div>
+        <label for="username">Username:</label>
+        <input type="text" id="user_id" name="user_id" required>
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <button type="submit" class="btn btn-lg btn-primary w-100">Log In</button> <!-- Changed type to submit -->
+    </form>
+    <div id="message"></div>
+    <style>body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 60vh;
+  }
+  .container {
+      background-color: #ffffff;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 400px;
+      color: #333;
+  }
+  h2 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+  }
+  input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+  }
+  button[type="button"] {
+      width: 100%;
+      background-color: #4CAF50;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+  }
+  button[type="button"]:hover {
+      background-color: #45a049;
+  }
   
+ 
+   </style>
+    <script>
+      document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        const user_id = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+  
+        fetch('/login', { // Adjust the endpoint to /login
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ user_id, password }) // Send user_id instead of username
+        })
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('message').innerText = data.message;
+          // Optionally, redirect the user to another page upon successful login
+          if (data.success) {
+            window.location.href = '/dashboard.html'; // Redirect to dashboard.html
+          }
+        })
+        .catch(error => {
+          console.error('Error logging in:', error);
+          document.getElementById('message').innerText = 'An error occurred. Please try again later.';
+        });
+      });
+  </script>
+  </div>
 </body>
 </html>
