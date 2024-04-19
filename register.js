@@ -27,7 +27,7 @@ function doSignUp(event) {
     }
     document.getElementById('message').innerHTML = '<p>Registering... Please wait.</p>';
     // Perform INSERT query to insert user registration data into MySQL database
-    const sql = "INSERT INTO `Users`(`UserID`, `Username`, `Password`, `PremiumToken`, `Chips`) VALUES (?, ?, ?, NULL, 1000)";
+    const sql = "INSERT INTO `Users`(`UserID`, `Username`, `Password`, `PremiumToken`, `Chips`) VALUES ([?], [?], [?],[ NULL],[ 1000])";
     
     // Retrieve the last UserID and increment it
     connection.query("SELECT MAX(UserID) AS maxUserID FROM users", (err, rows) => {
