@@ -191,7 +191,19 @@ app.get('/upgrade_sucess.html', (request, response) => {
 
 });
 
-// missing -- betting pages
+// CHIPS
+app.get('/chips.html', (request, response) => {
+
+    readFile('chips.html', 'utf8', (err, html) => {
+
+        if(err) {
+            response.status(500).send('Sorry, out of order :(');
+        }
+
+        response.send(html);
+    })
+
+});
 
 // Start-up page? change to landing page when that is ready
 app.get('/', (request, response) => {
