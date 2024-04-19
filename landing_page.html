@@ -10,38 +10,62 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>Welcome to the Racecar Betting System</h1>
-        <!-- Navigation menu -->
-        <nav>
-            <ul>
-                <li><a href="home.html">View Race Results</a></li>
-                <li><a href="login.html">Log In</a></li>
-                <li><a href="register.html">Create an account</a></li>
-            </ul>
-        </nav>
-    </header>
+    <center>
+        <header>
+            <h1>Welcome to the Racecar Betting System</h1>
+            <!-- Navigation menu -->
+            <nav>
+                <a href="home.html">View Race Results</a><br><br>
+                <a href="login.html">Log In</a><br><br>
+                <a href="register.html">Create an account</a>
+            </nav>
+        </header>
+    
+        <main>
+            <section class="introduction">
+                <h2>Experience the Excitement of Puzzle Betting</h2>
+                <p>Try our betting/gambling game where you can bet on racecars and solve the puzzle to predict the outcomes!</p>
+            </section>
+    
+            <section class="next-race">
+                <h2>Results for next race in...</h2>
+                <h2 id="timer"></h2>
+                <script>
+                    const timer = document.getElementById('timer');
+                    const table = document.getElementById('currentRace');
 
-    <main>
-        <section class="introduction">
-            <h2>Experience the Excitement of Puzzle Betting</h2>
-            <p>Try our betting/gambling game where you can bet on racecars and solve the puzzle to predict the outcomes!</p>
-        </section>
-
-        <section class="next-race">
-            <h2>Coming up...</h2>
-            <!-- This needs a clock -->
-            <div class="race">
-                <p>Next Race: April 20, 2024</p>
-            </div>
-        </section>
-
-        <!-- Anything else -->
-
-    </main>
-
-    <footer>
-        <p>&copy; 2024 Racecar Betting System. All rights reserved. Created for COP4331</p>
-    </footer>
+                    function updateClock() {
+                        var currTime = new Date();
+                        if(currTime.getSeconds() > 50) {
+                            timer.innerText = (2 - currTime.getMinutes()%3) + ":0" + (60 - currTime.getSeconds());
+                        } else if(currTime.getSeconds() == 0) {
+                            timer.innerText = (3 - currTime.getMinutes()%3) + ":00";
+                        } else {
+                            timer.innerText = (2 - currTime.getMinutes()%3) + ":" + (60 - currTime.getSeconds());
+                        }
+                        if(currTime.getMinutes%3 == 0) {
+                            
+                        }
+                        setTimeout(() => {updateClock();}, 100);
+                    }
+                    
+                    updateClock();
+                </script>
+                <div>
+                    <table id="currentRace"></table>
+                </div>
+                <div class="race">
+                    <p>Next Race: April 20, 2024</p>
+                </div>
+            </section>
+    
+            <!-- Anything else -->
+    
+        </main>
+    
+        <footer style="position: absolute; bottom: 0; width: 99%; height: 2.5rem;">
+            <p>&copy; 2024 Racecar Betting System. All rights reserved. Created for COP4331</p>
+        </footer>
+    </center>
 </body>
 </html>
