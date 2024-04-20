@@ -10,7 +10,7 @@ function doLogin(event) {
             const response = JSON.parse(this.responseText);
             console.log('Login response:', response);
             if (response.success) {
-                window.location.href = 'welcome.html'; // Redirect to a welcome page or dashboard
+                window.location.href = 'premium_dash.html';
             } else {
                 document.getElementById('message').innerHTML = `<p class="error">${response.message}</p>`;
             }
