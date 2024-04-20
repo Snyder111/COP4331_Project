@@ -165,10 +165,24 @@ app.get('/account_mgmt.html', (request, response) => {
 
 });
 
-// DASHBOARD
+// DASHBOARD -- free version
 app.get('/dashboard.html', (request, response) => {
 
     readFile('dashboard.html', 'utf8', (err, html) => {
+
+        if(err) {
+            response.status(500).send('Sorry, out of order :(');
+        }
+
+        response.send(html);
+    })
+
+});
+
+// PREMIUM DASHBOARD
+app.get('/premium_dash.html', (request, response) => {
+
+    readFile('premium_dash.html', 'utf8', (err, html) => {
 
         if(err) {
             response.status(500).send('Sorry, out of order :(');
