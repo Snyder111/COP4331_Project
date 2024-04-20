@@ -7,6 +7,7 @@ const { time } = require('console');
 const app = express();
 
 const mysql = require('mysql');
+const { resourceLimits } = require('worker_threads');
 
 const connection = mysql.createConnection({
 host: 'sql5.freesqldatabase.com',
@@ -75,6 +76,49 @@ function Race() {
         if (err) throw err
     });
 
+}
+
+function runBets() {
+    var winner;
+    var bets;
+
+    fetch('./getWinners', {
+        method: 'POST'
+    }).then(response => response.json()).then(data => {
+        winner = data[data.length - 1];
+    });
+
+    fetch('./getWinners', {
+        method: 'POST'
+    }).then(response => response.json()).then(data => {
+        bets = data;
+    });
+
+
+    var totalChips = 0;
+    var numWinners = 0;
+    for(var i = 0; i < result.length; i++) {
+        totalChips += result[i].Chips;
+        if(winner.tireType == bets[i].tireType && winner.tireBrand == bets[i].tireBrand && winner.colorStr == bets[i].colorStr && winner.body == bets[i].body) {
+            numWinners++;
+        }
+    }
+
+    for(var i = 0; i < result.length; i++) {
+        if(winner.tireType == bets[i].tireType && winner.tireBrand == bets[i].tireBrand && winner.colorStr == bets[i].colorStr && winner.body == bets[i].body) {
+            connection.query('UPDATE Users SET Chips = Chips + ' + (totalChips/(numWinners - 1)) + ' WHERE Username = ' + bets[i].Username, (err, result, fields) => {
+                if (err) throw err
+            });
+        }
+    }
+
+    connection.query('DROP TABLE Bets', (err, result, fields) => {
+        if (err) throw err
+    });
+
+    connection.query('CREATE TABLE Bets (Username VARCHAR(20), Chips int, tireBrand VARCHAR(20), tireType VARCHAR(20), colorStr VARCHAR(20), colorHex VARCHAR(20), body VARCHAR(20))', (err, result, fields) => {
+        if (err) throw err
+    });
 }
 
 //Race();
@@ -194,7 +238,7 @@ app.get('/chips.html', (request, response) => {
 // Start-up page? change to landing page when that is ready
 app.get('/', (request, response) => {
 
-    readFile('landing_page.html', 'utf8', (err, html) => {
+    readFile('dashboard.html', 'utf8', (err, html) => {
 
         if(err) {
             response.status(500).send('Sorry, out of order :(');
@@ -226,14 +270,24 @@ app.post('/getWinners', (request, response) => {
     });
 });
 
+app.post('/getBets', (request, response) => {
+    connection.query('SELECT * FROM Bets', (err, result, fields) => {
+        if (err) throw err
+        response.status(200).json(result);
+    });
+});
+
 app.listen(process.env.PORT || 3000, () => console.log('App available on http://localhost:3000/'));
 
-const timeout = 3; //time to wait in minutes for the timer
+const timeout = 5; //time to wait in minutes for the timer
 function timer() {
     var currTime = new Date();
     if(currTime.getMinutes()%timeout == 0) {
         Race();
-        setTimeout(() =>{timer();}, timeout*60000);
+        setTimeout(() =>{timer();}, (timeout - 1)*60000);
+    } else if(currTime.getMinutes()%timeout == 4) {
+        runBets();
+        setTimeout(() => {timer();}, 60000);
     } else {
         setTimeout(() => {timer();}, 1000);
     }
