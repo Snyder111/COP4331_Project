@@ -125,61 +125,85 @@
         <section class="betting-options">
             <h2>Upcoming Races</h2>
             <!-- Display upcoming races with options to place bets -->
+            <h2 id="timer"></h2>
             <table id="table">
-            <tr>
-                <th><h3>Tire Brand</h3></th>
-                <th><h3>Tire Type</h3></th>
-                <th><h3>Color</h3></th>
-                <th><h3>Body Type</h3></th>
-            </tr>
+                <tr>
+                    <th><h3>Tire Brand</h3></th>
+                    <th><h3>Tire Type</h3></th>
+                    <th><h3>Color</h3></th>
+                    <th><h3>Body Type</h3></th>
+                </tr>
             </table>
-        <script>
-            const timer = document.getElementById('timer');
-            const table = document.getElementById('table');
-        
-            function updateTable() {
-                fetch('./getCars', {
-                    method: 'POST'
-                }).then(response => response.json()).then(data => {
-                    
-                    var table = document.getElementById("table");
-                    for(var i = 0; i < 10; i++) {
-                        var newRow = table.insertRow();
-                        newRow.style.color = data[i].ColorHex;
-                        newRow.insertCell().innerHTML = data[i].tireBrand;
-                        newRow.insertCell().innerHTML = data[i].tireType;
-                        newRow.insertCell().innerHTML = data[i].colorStr;
-                        newRow.insertCell().innerHTML = data[i].body;
+            <script>
+                const timer = document.getElementById('timer');
+                const table = document.getElementById('table');
+            
+                function updateTable() {
+                    fetch('./getAll', {
+                        method: 'POST'
+                    }).then(response => response.json()).then(races => {
+                        fetch('./getWinners', {
+                            method: 'POST'
+                        }).then(response => response.json()).then(winners => {
+                            var table = document.getElementById("table");
+                            for(var i = 0, j = 2; i < 100; i++) {
+                                if(i%10 == 0) {
+                                    var winnerRow = table.insertRow();
+                                    for(var k = 0; k < 4; k++) {
+                                        winnerRow.insertCell();
+                                    }
+                                    winnerRow = table.insertRow();
+                                    for(var k = 0; k < 4; k++) {
+                                        winnerRow.insertCell();
+                                    }
+                                    winnerRow = table.insertRow();
+                                    winnerRow.style.color = winners[j].colorHex;
+                                    winnerRow.insertCell().innerHTML = winners[j].tireBrand;
+                                    winnerRow.insertCell().innerHTML = winners[j].tireType;
+                                    winnerRow.insertCell().innerHTML = winners[j].colorStr;
+                                    winnerRow.insertCell().innerHTML = winners[j].body;
+                                    winnerRow = table.insertRow();
+                                    for(var k = 0; k < 4; k++) {
+                                        winnerRow.insertCell();
+                                    }
+                                    j++;
+                                }
+                                var newRow = table.insertRow();
+                                newRow.style.color = races[i].ColorHex;
+                                newRow.insertCell().innerHTML = races[i].tireBrand;
+                                newRow.insertCell().innerHTML = races[i].tireType;
+                                newRow.insertCell().innerHTML = races[i].colorStr;
+                                newRow.insertCell().innerHTML = races[i].body;
+                            }
+                        })
+                    });
+                }
+                const timing = 5;
+                function updateClock() {
+                    var currTime = new Date();
+                    if(currTime.getSeconds() > 50) {
+                        timer.innerText = (timing - 1 - currTime.getMinutes()%timing) + ":0" + (60 - currTime.getSeconds());
+                    } else if(currTime.getSeconds() == 0) {
+                        timer.innerText = (timing - currTime.getMinutes()%timing) + ":00";
+                    } else {
+                        timer.innerText = (timing - 1 - currTime.getMinutes()%timing) + ":" + (60 - currTime.getSeconds());
+                    }
+                    if(currTime.getSeconds() == 1 && currTime.getMinutes()%timing == 0) {
+                        for(var i = 0; i < 10; i++) {
+                            table.deleteRow(-1);
+                        }
+                        updateTable();
+                        console.log("Updated");
+                        setTimeout(() => {updateClock();}, 1000);
+                    } else {
+                        setTimeout(() => {updateClock();}, 100);
                     }
                     
-                });
-            }
-        
-            function updateClock() {
-                var currTime = new Date();
-                if(currTime.getSeconds() > 50) {
-                    timer.innerText = (2 - currTime.getMinutes()%3) + ":0" + (60 - currTime.getSeconds());
-                } else if(currTime.getSeconds() == 0) {
-                    timer.innerText = (3 - currTime.getMinutes()%3) + ":00";
-                } else {
-                    timer.innerText = (2 - currTime.getMinutes()%3) + ":" + (60 - currTime.getSeconds());
                 }
-                if(currTime.getSeconds() == 1 && currTime.getMinutes()%3 == 0) {
-                    for(var i = 0; i < 10; i++) {
-                        table.deleteRow(-1);
-                    }
-                    updateTable();
-                    console.log("Updated");
-                    setTimeout(() => {updateClock();}, 1000);
-                } else {
-                    setTimeout(() => {updateClock();}, 100);
-                }
-                
-            }
-        
-            updateTable();
-            updateClock();
-        </script>
+            
+                updateTable();
+                updateClock();
+            </script>
             <!-- More upcoming races can be listed here -->
         </section>
     </main>
