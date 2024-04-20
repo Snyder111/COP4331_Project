@@ -41,8 +41,26 @@
                 </table>
                 <script>
                     const timer = document.getElementById('timer');
-                    const table = document.getElementById('currentRace');
-
+                    const table = document.getElementById('table');
+                
+                    function updateTable() {
+                        fetch('./getCars', {
+                            method: 'POST'
+                        }).then(response => response.json()).then(data => {
+                            
+                            var table = document.getElementById("table");
+                            for(var i = 0; i < 10; i++) {
+                                var newRow = table.insertRow();
+                                newRow.style.color = data[i].ColorHex;
+                                newRow.insertCell().innerHTML = data[i].tireBrand;
+                                newRow.insertCell().innerHTML = data[i].tireType;
+                                newRow.insertCell().innerHTML = data[i].colorStr;
+                                newRow.insertCell().innerHTML = data[i].body;
+                            }
+                            
+                        });
+                    }
+                
                     function updateClock() {
                         var currTime = new Date();
                         if(currTime.getSeconds() > 50) {
@@ -52,32 +70,20 @@
                         } else {
                             timer.innerText = (2 - currTime.getMinutes()%3) + ":" + (60 - currTime.getSeconds());
                         }
-                        if(currTime.getMinutes%3 == 0) {
-                            
+                        if(currTime.getSeconds() == 1 && currTime.getMinutes()%3 == 0) {
+                            for(var i = 0; i < 10; i++) {
+                                table.deleteRow(-1);
+                            }
+                            updateTable();
+                            console.log("Updated");
+                            setTimeout(() => {updateClock();}, 1000);
+                        } else {
+                            setTimeout(() => {updateClock();}, 100);
                         }
-                        setTimeout(() => {updateClock();}, 100);
+                        
                     }
-                    
-                    fetch('./getCars', {
-                        method: 'POST'
-                    }).then(response => response.json()).then(data => {
-                        console.log(data);
-                        
-                        var table = document.getElementById("table");
-                        for(var i = data.length - 10; i < data.length; i++) {
-                            var newRow = table.insertRow();
-                            newRow.style.color = data[i].colorHex;
-                            newRow.insertCell().innerHTML = data[i].tireBrand;
-                            newRow.insertCell().innerHTML = data[i].tireType;
-                            newRow.insertCell().innerHTML = data[i].colorStr;
-                            newRow.insertCell().innerHTML = data[i].body;
-                        }
-                        
-                    }).catch(error => {
-                        console.error('Error registering user:', error);
-                        document.getElementById('message').innerText = 'An error occurred. Please try again later.';
-                    });
-
+                
+                    updateTable();
                     updateClock();
                 </script>
                 <div>
