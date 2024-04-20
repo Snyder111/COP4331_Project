@@ -238,7 +238,7 @@ app.get('/chips.html', (request, response) => {
 // Start-up page? change to landing page when that is ready
 app.get('/', (request, response) => {
 
-    readFile('dashboard.html', 'utf8', (err, html) => {
+    readFile('premium_dashboard.html', 'utf8', (err, html) => {
 
         if(err) {
             response.status(500).send('Sorry, out of order :(');
