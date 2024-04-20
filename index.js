@@ -226,6 +226,20 @@ app.post('/getCars', (request, response) => {
     });
 });
 
+app.post('/getAll', (request, response) => {
+    connection.query('SELECT * FROM Cars', (err, result, fields) => {
+        if (err) throw err
+        response.status(200).json(result);
+    });
+});
+
+app.post('/getWinners', (request, response) => {
+    connection.query('SELECT * FROM Races', (err, result, fields) => {
+        if (err) throw err
+        response.status(200).json(result);
+    });
+});
+
 app.listen(process.env.PORT || 3000, () => console.log('App available on http://localhost:3000/'));
 
 const timeout = 3; //time to wait in minutes for the timer
