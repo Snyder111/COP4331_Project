@@ -13,6 +13,34 @@
             padding: 0;
         }
 
+        header {
+            background-color: #333;
+            color: rgb(255, 255, 255);
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: center;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
         .container {
             max-width: 800px;
             margin: 50px auto;
@@ -35,6 +63,7 @@
 
         h2 {
             color: #333;
+            margin-bottom: 10px;
         }
 
         p {
@@ -52,7 +81,8 @@
             margin-top: 20px;
         }
 
-        th, td {
+        th,
+        td {
             border: 1px solid #ddd;
             padding: 10px;
         }
@@ -69,17 +99,33 @@
         #Winner td {
             font-weight: bold;
         }
+
+        #chip-balance {
+            font-weight: bold;
+            color: #007bff;
+        }
+
     </style>
-    
+
 </head>
 
 <body>
+    <header>
+        <h1 style="color: #fff">Welcome to the Premium Dashboard!</h1>
+        <!-- Webpage navigation links-->
+        <nav>
+            <ul>
+                <li><a href="account_mgmt.html">Manage Account</a></li>
+                <li><a href="home.html">Race Results</a></li>
+            </ul>
+        </nav>
+    </header>
+
     <div class="container">
-        <h1>Welcome to the Premium Dashboard!</h1>
 
         <!-- User Information -->
         <div class="user-info">
-            <h2>User Information</h2>
+            <h2>Dashboard</h2>
             <p><strong>Name:</strong> <span id="userName">John Doe</span></p>
             <p><strong>Chip Balance:</strong> <span id="chipBalance">1000</span></p>
         </div>
