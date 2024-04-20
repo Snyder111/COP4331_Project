@@ -1,12 +1,12 @@
 <?php
 session_start(); // Start or resume a session
 // Database connection parameters
-$host = 'sql5.freesqldatabase.com';  // Your actual host
-$dbname = 'sql5700190';  // Your actual database name
-$user = 'sql5700190';  // Your actual database user
-$pass = 'KLk8Zr8C7N';  // Your actual password
+$host = 'sql5.freesqldatabase.com';
+$dbname = 'sql5700190';
+$user = 'sql5700190';
+$pass = 'KLk8Zr8C7N';
 try {
-    // Attempt a PDO connection to your database
+    // Attempt a PDO connection to the database
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $user, $pass);
     // Set the PDO error mode to exception to catch potential errors
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -30,7 +30,7 @@ try {
         if ($stmt->rowCount() > 0) {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
             // Verify the password with the hashed password in the database
-            if (password_verify($password, $user['password'])) {
+            if (password_verify($password, $user['Password'])) { // Adjusted field name to Password
                 // Password is correct, so start a new session
                 // Store data in session variables
                 $_SESSION["loggedin"] = true;
