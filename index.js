@@ -164,7 +164,7 @@ app.get('/upgrade.html', (request, response) => {
 });
 
 // UPGRADE SUCCESS
-app.get('/upgrade_sucess.html', (request, response) => {
+app.get('/upgrade_sucesss.html', (request, response) => {
 
     readFile('upgrade_success.html', 'utf8', (err, html) => {
 
