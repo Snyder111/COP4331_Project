@@ -62,7 +62,7 @@ function Race() {
     for(var i = 0; i < 10; i++) {
         const car = new Car();
 
-        connection.query('INSERT INTO Cars VALUES ("' + car.tire + '", "' + car.tireType + '", "' + car.color + '", "' + car.hexColor + '", "' + car.body + '")', (err, result, fields) => {
+        connection.query('INSERT INTO Cars VALUES ("' + car.tire + '", "' + car.tireType + '", "' + car.color + '", "' + car.hexColor + '", "' + car.body + '", NULL)', (err, result, fields) => {
             if (err) throw err
         });
 
@@ -110,7 +110,7 @@ app.get('/login.html', (request, response) => {
 // REGISTER
 app.get('/register.html', (request, response) => {
 
-    readFile('register.html', 'utf8', (err, html) => {
+    readFile('/user-registration-app/register.html', 'utf8', (err, html) => {
 
         if(err) {
             response.status(500).send('Sorry, out of order :(');
@@ -220,9 +220,8 @@ app.get('/', (request, response) => {
 });
 
 app.post('/getCars', (request, response) => {
-    connection.query('SELECT * FROM Cars; SELECT * FROM Races', (err, result, fields) => {
+    connection.query('SELECT * FROM Cars ORDER BY id DESC LIMIT 10;', (err, result, fields) => {
         if (err) throw err
-        console.log(fields);
         response.status(200).json(result);
     });
 });
@@ -233,7 +232,7 @@ const timeout = 3; //time to wait in minutes for the timer
 function timer() {
     var currTime = new Date();
     if(currTime.getMinutes()%timeout == 0) {
-        console.log(currTime);
+        Race();
         setTimeout(() =>{timer();}, timeout*60000);
     } else {
         setTimeout(() => {timer();}, 1000);
