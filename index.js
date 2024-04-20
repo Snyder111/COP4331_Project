@@ -18,6 +18,17 @@ database: 'sql5700190'
 
 connection.connect();
 
+/*
+connection.query('SELECT * FROM Users WHERE Username = "yy"', (err, result, fields) => {
+    if(err) throw err
+    console.log(result);
+});
+
+connection.end();
+*/
+
+/* */
+
 function Race() {
 
     const tracks = ["Sand", "Dirt", "Gravel", "Tarmac", "Brick", "Ice"];
@@ -78,6 +89,8 @@ function Race() {
 
 }
 
+/*
+
 function runBets() {
     var winner;
     var bets;
@@ -93,6 +106,7 @@ function runBets() {
     }).then(response => response.json()).then(data => {
         bets = data;
     });
+
 
 
     var totalChips = 0;
@@ -120,6 +134,8 @@ function runBets() {
         if (err) throw err
     });
 }
+
+*/
 
 //Race();
 
@@ -252,7 +268,7 @@ app.get('/chips.html', (request, response) => {
 // Start-up page? change to landing page when that is ready
 app.get('/', (request, response) => {
 
-    readFile('premium_dashboard.html', 'utf8', (err, html) => {
+    readFile('landing_page.html', 'utf8', (err, html) => {
 
         if(err) {
             response.status(500).send('Sorry, out of order :(');
@@ -291,7 +307,8 @@ app.post('/getBets', (request, response) => {
     });
 });
 
-app.listen(process.env.PORT || 3000, () => console.log('App available on http://localhost:3000/'));
+// changed to PORT 3001 to fix an error saying that PORT 3000 was already in use -- eva
+app.listen(process.env.PORT || 3001, () => console.log('App available on http://localhost:3001/')); 
 
 const timeout = 5; //time to wait in minutes for the timer
 function timer() {
@@ -300,7 +317,7 @@ function timer() {
         Race();
         setTimeout(() =>{timer();}, (timeout - 1)*60000);
     } else if(currTime.getMinutes()%timeout == 4) {
-        runBets();
+        //runBets();
         setTimeout(() => {timer();}, 60000);
     } else {
         setTimeout(() => {timer();}, 1000);
@@ -308,3 +325,7 @@ function timer() {
 }
 
 timer();
+
+
+
+

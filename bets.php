@@ -1,6 +1,9 @@
 <?php
 // .php file that manages placing bets
 
+$message1 = "Entering bets.php";
+echo "<script>console.log('$message');</script>";
+
 // Retrieve input
 $data = json_decode(file_get_contents("php://input"));
 
@@ -41,10 +44,10 @@ if($chipsResult) {
 
     if($updateResult) {
       // Bet placed succesfully
-      echo json_encode(array("success" => true);
+      echo json_encode(array("success" => true));
     } else {
       // Error updating user's chips
-      echo json_encode(array("success" => false, "message" "Error updating chips."));
+      echo json_encode(array("success" => false, "message" => "Error updating chips."));
     }
   } else {
       // User has insufficient chips
@@ -52,6 +55,6 @@ if($chipsResult) {
   }
 } else {
   // Error querying database
-  echo json_encode(array("success" => false, "message" => "Error querying database.");
+  echo json_encode(array("success" => false, "message" => "Error querying database."));
 }
 ?>
