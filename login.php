@@ -12,17 +12,17 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Securely fetch the data from the POST array
-        $userId = filter_input(INPUT_POST, 'user_id', FILTER_SANITIZE_STRING);
+        $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
         $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
 
         // SQL query to fetch the user
-        $sql = "SELECT * FROM users WHERE user_id = :userId";
+        $sql = "SELECT * FROM Users WHERE Username = :username";
 
         // Prepare the statement
         $stmt = $pdo->prepare($sql);
 
         // Bind parameters to statement variables
-        $stmt->bindParam(':userId', $userId);
+        $stmt->bindParam(':username', $username);
 
         // Execute the statement
         $stmt->execute();
@@ -35,7 +35,7 @@ try {
                 // Store data in session variables
                 $_SESSION["loggedin"] = true;
                 $_SESSION["id"] = $user['id']; // Assuming your user table has an 'id'
-                $_SESSION["user_id"] = $userId; // Store the user_id
+                $_SESSION["username"] = $username; // Store the username
 
                 // Redirect user to welcome page or your desired page
                 echo "Login successful!";
@@ -45,7 +45,7 @@ try {
                 echo "Invalid password.";
             }
         } else {
-            // UserId doesn't exist
+            // Username doesn't exist
             echo "No account found with that Username.";
         }
     }
