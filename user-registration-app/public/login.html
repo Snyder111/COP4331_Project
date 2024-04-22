@@ -45,7 +45,8 @@
         .then(data => {
           document.getElementById('message').innerText = data.message;
           if (data.success) {
-            window.location.href = '/dashboard.html';
+            window.location.href = '/dashboard';
+            
           }
         })
         .catch(error => {
@@ -54,6 +55,9 @@
         });
       });
     });
+
+    
+
   </script>
 </body>
 </html>
