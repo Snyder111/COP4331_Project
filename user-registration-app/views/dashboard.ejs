@@ -123,6 +123,33 @@
             <p>Upgrade to premium <a href="upgrade.html">here</a> for access to all race results.</p>
         </section>
         <section class="betting-options">
+            <div>
+                <!-- Bet placing system -->
+                <h2>Place a Bet</h2>
+                <form id="betForm">
+                    <label for="userId">Enter your username:</label>
+                    <input type="text" id="userId" name="userId"><br><br>
+                    <label for="betAmount">Enter number of chips:</label>
+                    <input type="number" id="betAmount" name="betAmount" min = "1"><br><br>
+                    <label for="racecar">Select racecar to bet on:</label>
+                    <select id="racecar" name="racecar">
+                        <option value="1">Racecar 1</option>
+                        <option value="2">Racecar 2</option>
+                        <option value="3">Racecar 3</option>
+                        <option value="4">Racecar 4</option>
+                        <option value="5">Racecar 5</option>
+                        <option value="6">Racecar 6</option>
+                        <option value="7">Racecar 7</option>
+                        <option value="8">Racecar 8</option>
+                        <option value="9">Racecar 9</option>
+                        <option value="10">Racecar 10</option>
+                    </select><br><br>
+                    <button type="submit">Place Bet</button>
+                </form>
+                <div id="message"></div>
+    
+                <script src="bets.js"></script>
+            </div>
             <h2>Upcoming Races</h2>
             <!-- Upcoming races, place bets -->
             <h2 id="timer"></h2>
