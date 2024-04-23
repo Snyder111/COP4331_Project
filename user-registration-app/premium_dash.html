@@ -181,7 +181,7 @@
                             method: 'POST'
                         }).then(response => response.json()).then(winners => {
                             var table = document.getElementById("table");
-                            for(var i = 0, j = 2; i < 100; i++) {
+                            for(var i = 0, j = 2; i < races.length; i++) {
                                 if(i%10 == 0) {
                                     var winnerRow = table.insertRow();
                                     for(var k = 0; k < 4; k++) {
