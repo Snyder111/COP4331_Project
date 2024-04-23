@@ -163,13 +163,10 @@
             <h2 id="timer"></h2>
             <table id="table">
                 <tr>
-                    <th><h3>Race #</h3></th>
-                    <th><h3>Car #</h3></th>
                     <th><h3>Tire Brand</h3></th>
                     <th><h3>Tire Type</h3></th>
                     <th><h3>Color</h3></th>
                     <th><h3>Body Type</h3></th>
-                    <th><h3>Chance</h3></th>
                 </tr>
             </table>
             <script>
@@ -184,7 +181,7 @@
                             method: 'POST'
                         }).then(response => response.json()).then(winners => {
                             var table = document.getElementById("table");
-                            for(var i = 0, j = 2; i < races.length; i++) {
+                            for(var i = 0, j = 2; i < 100; i++) {
                                 if(i%10 == 0) {
                                     var winnerRow = table.insertRow();
                                     for(var k = 0; k < 4; k++) {

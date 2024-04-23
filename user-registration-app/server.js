@@ -68,6 +68,22 @@ app.get('/login.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/login.html'));
 });
 
+app.get('/upgrade.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'upgrade.html'));
+});
+
+app.get('/upgrade_success.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'upgrade_success.html'));
+});
+
+app.get('/premium_dash.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'premium_dash.html'));
+});
+
+app.get('/account_mgmt.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'account_mgmt.html'));
+});
+
 
 let loggedInUser = null;
 
@@ -116,6 +132,27 @@ app.get('/dashboard', (req, res) => {
 });
 
 
+
+app.post('/getCars', (request, response) => {
+  connection.query('SELECT * FROM Cars ORDER BY id DESC LIMIT 10;', (err, result, fields) => {
+      if (err) throw err
+      response.status(200).json(result);
+  });
+});
+
+app.post('/getAll', (request, response) => {
+  connection.query('SELECT * FROM Cars', (err, result, fields) => {
+      if (err) throw err
+      response.status(200).json(result);
+  });
+});
+
+app.post('/getWinners', (request, response) => {
+  connection.query('SELECT * FROM Races', (err, result, fields) => {
+      if (err) throw err
+      response.status(200).json(result);
+  });
+});
 
 
 

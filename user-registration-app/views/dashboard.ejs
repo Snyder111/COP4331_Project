@@ -137,82 +137,70 @@
             <script>
                 const timer = document.getElementById('timer');
                 const table = document.getElementById('table');
-              
+            
                 function updateTable() {
-                  fetch('./getAll', {
-                    method: 'POST'
-                  })
-                  .then(response => {
-                    if (!response.ok) {
-                      throw new Error('Failed to fetch race data');
-                    }
-                    return response.json();
-                  })
-                  .then(races => {
-                    // Fetch winners data
-                    return fetch('./getWinners', {
-                      method: 'POST'
-                    })
-                    .then(response => {
-                      if (!response.ok) {
-                        throw new Error('Failed to fetch winners data');
-                      }
-                      return response.json();
-                    })
-                    .then(winners => {
-                      // Clear existing table rows
-                      table.innerHTML = '';
-                      
-                      // Populate the table with race and winner data
-                      for (let i = 0, j = 2; i < races.length && j < winners.length; i++) {
-                        const newRow = table.insertRow();
-                        newRow.style.color = races[i].ColorHex;
-                        newRow.insertCell().innerHTML = races[i].tireBrand;
-                        newRow.insertCell().innerHTML = races[i].tireType;
-                        newRow.insertCell().innerHTML = races[i].colorStr;
-                        newRow.insertCell().innerHTML = races[i].body;
-              
-                        // Only add winner rows if there are enough winners
-                        if (i % 10 == 0) {
-                          const winnerRow = table.insertRow();
-                          for (let k = 0; k < 4; k++) {
-                            winnerRow.insertCell();
-                          }
-                          winnerRow.style.color = winners[j].colorHex;
-                          winnerRow.insertCell().innerHTML = winners[j].tireBrand;
-                          winnerRow.insertCell().innerHTML = winners[j].tireType;
-                          winnerRow.insertCell().innerHTML = winners[j].colorStr;
-                          winnerRow.insertCell().innerHTML = winners[j].body;
-                          for (let k = 0; k < 4; k++) {
-                            table.insertRow().insertCell();
-                          }
-                          j++;
-                        }
-                      }
+                    fetch('./getAll', {
+                        method: 'POST'
+                    }).then(response => response.json()).then(races => {
+                        fetch('./getWinners', {
+                            method: 'POST'
+                        }).then(response => response.json()).then(winners => {
+                            var table = document.getElementById("table");
+                            for(var i = 0, j = 2; i < 100; i++) {
+                                if(i%10 == 0) {
+                                    var winnerRow = table.insertRow();
+                                    for(var k = 0; k < 4; k++) {
+                                        winnerRow.insertCell();
+                                    }
+                                    winnerRow = table.insertRow();
+                                    for(var k = 0; k < 4; k++) {
+                                        winnerRow.insertCell();
+                                    }
+                                    winnerRow = table.insertRow();
+                                    winnerRow.style.color = winners[j].colorHex;
+                                    winnerRow.insertCell().innerHTML = winners[j].tireBrand;
+                                    winnerRow.insertCell().innerHTML = winners[j].tireType;
+                                    winnerRow.insertCell().innerHTML = winners[j].colorStr;
+                                    winnerRow.insertCell().innerHTML = winners[j].body;
+                                    winnerRow = table.insertRow();
+                                    for(var k = 0; k < 4; k++) {
+                                        winnerRow.insertCell();
+                                    }
+                                    j++;
+                                }
+                                var newRow = table.insertRow();
+                                newRow.style.color = races[i].ColorHex;
+                                newRow.insertCell().innerHTML = races[i].tireBrand;
+                                newRow.insertCell().innerHTML = races[i].tireType;
+                                newRow.insertCell().innerHTML = races[i].colorStr;
+                                newRow.insertCell().innerHTML = races[i].body;
+                            }
+                        })
                     });
-                  })
-                  .catch(error => {
-                    console.error('Error:', error);
-                  });
                 }
-                
                 const timing = 5;
                 function updateClock() {
-                  const currTime = new Date();
-                  if (currTime.getSeconds() > 50) {
-                    timer.innerText = (timing - 1 - currTime.getMinutes() % timing) + ":0" + (60 - currTime.getSeconds());
-                  } else if (currTime.getSeconds() == 0) {
-                    timer.innerText = (timing - currTime.getMinutes() % timing) + ":00";
-                  } else {
-                    timer.innerText = (timing - 1 - currTime.getMinutes() % timing) + ":" + (60 - currTime.getSeconds());
-                  }
-                  if (currTime.getSeconds() == 1 && currTime.getMinutes() % timing == 0) {
-                    // Update table every 5 minutes
-                    updateTable();
-                  }
-                  setTimeout(updateClock, 1000);
+                    var currTime = new Date();
+                    if(currTime.getSeconds() > 50) {
+                        timer.innerText = (timing - 1 - currTime.getMinutes()%timing) + ":0" + (60 - currTime.getSeconds());
+                    } else if(currTime.getSeconds() == 0) {
+                        timer.innerText = (timing - currTime.getMinutes()%timing) + ":00";
+                    } else {
+                        timer.innerText = (timing - 1 - currTime.getMinutes()%timing) + ":" + (60 - currTime.getSeconds());
+                    }
+                    if(currTime.getSeconds() == 1 && currTime.getMinutes()%timing == 0) {
+                        for(var i = 0; i < 10; i++) {
+                            table.deleteRow(-1);
+                        }
+                        updateTable();
+                        console.log("Updated");
+                        setTimeout(() => {updateClock();}, 1000);
+                    } else {
+                        setTimeout(() => {updateClock();}, 100);
+                    }
+                    
                 }
-              
+            
                 updateTable();
                 updateClock();
               </script>
