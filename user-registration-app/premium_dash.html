@@ -132,6 +132,16 @@
 
         <div>
             <!-- Bet placing system -->
+            <center><h2>Current Race</h2></center>
+            <table id="currRace">
+                <tr>
+                    <th><h3>Car #</h3></th>
+                    <th><h3>Tire Brand</h3></th>
+                    <th><h3>Tire Type</h3></th>
+                    <th><h3>Color</h3></th>
+                    <th><h3>Body Type</h3></th>
+                </tr>
+            </table>
             <h2>Place a Bet</h2>
             <form id="betForm">
                 <label for="userId">Enter your username:</label>
@@ -160,7 +170,7 @@
 
         <!-- Table of Race Results -->
         <div class="race-results">
-            <h2 id="timer"></h2>
+            <center><h2 id="timer"></h2></center>
             <table id="table">
                 <tr>
                     <th><h3>Tire Brand</h3></th>
@@ -172,7 +182,29 @@
             <script>
                 const timer = document.getElementById('timer');
                 const table = document.getElementById('table');
-            
+                const curr = document.getElementById('currRace')
+                var numRaces = 0;
+
+                function updateCurrTable() {
+                    fetch('./getCars', {
+                        method: 'POST'
+                    }).then(response => response.json()).then(data => {
+                        
+                        for(var i = 0; i < 10; i++) {
+                            var newRow = curr.insertRow();
+                            newRow.style.color = data[i].ColorHex;
+                            var numCell = newRow.insertCell();
+                            numCell.style.color = '#000';
+                            numCell.innerHTML = (i + 1);
+                            newRow.insertCell().innerHTML = data[i].tireBrand;
+                            newRow.insertCell().innerHTML = data[i].tireType;
+                            newRow.insertCell().innerHTML = data[i].colorStr;
+                            newRow.insertCell().innerHTML = data[i].body;
+                        }
+                        
+                    });
+                }
+
                 function updateTable() {
                     fetch('./getAll', {
                         method: 'POST'
@@ -181,6 +213,7 @@
                             method: 'POST'
                         }).then(response => response.json()).then(winners => {
                             var table = document.getElementById("table");
+                            numRaces = races.length;
                             for(var i = 0, j = 2; i < races.length; i++) {
                                 if(i%10 == 0) {
                                     var winnerRow = table.insertRow();
@@ -225,8 +258,12 @@
                     }
                     if(currTime.getSeconds() == 1 && currTime.getMinutes()%timing == 0) {
                         for(var i = 0; i < 10; i++) {
+                            curr.deleteRow(-1);
+                        }
+                        for(var i = 0; i < numRaces/10*4 + numRaces; i++) {
                             table.deleteRow(-1);
                         }
+                        updateCurrTable();
                         updateTable();
                         console.log("Updated");
                         setTimeout(() => {updateClock();}, 1000);
@@ -237,6 +274,7 @@
                 }
             
                 updateTable();
+                updateCurrTable();
                 updateClock();
             </script>
         </div>
